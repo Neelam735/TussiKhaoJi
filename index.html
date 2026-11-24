@@ -36,6 +36,8 @@
     label { display:block; font-size:.85rem; color:var(--muted); margin:10px 0 4px; }
     input { width:100%; font:inherit; padding:9px 10px; border-radius:8px; border:1px solid var(--border);
       background:var(--bg); color:var(--text); }
+    input[readonly] { color:var(--muted); cursor:default; border-style:dashed; }
+    input[readonly]:focus { outline:none; }
     .two { display:flex; gap:8px; } .two > div { flex:1; }
     .hint { font-size:.8rem; color:var(--muted); margin-top:8px; }
     @media print {
@@ -63,14 +65,14 @@
   <section class="card no-print">
     <h2>Restaurant location</h2>
     <label for="name">Name</label>
-    <input id="name" autocomplete="off" />
+    <input id="name" readonly tabindex="-1" />
     <label for="address">Address</label>
     <input id="address" placeholder="Street, city" autocomplete="off" />
     <div class="two">
-      <div><label for="lat">Latitude (optional)</label><input id="lat" inputmode="decimal" placeholder="31.6340" /></div>
-      <div><label for="lng">Longitude (optional)</label><input id="lng" inputmode="decimal" placeholder="74.8723" /></div>
+      <div><label for="lat">Latitude</label><input id="lat" readonly tabindex="-1" /></div>
+      <div><label for="lng">Longitude</label><input id="lng" readonly tabindex="-1" /></div>
     </div>
-    <div class="hint">Coordinates give the most accurate directions. In Google Maps, long-press the restaurant's pin and copy the numbers shown. To make these the default for everyone, put them in <code>config.js</code>.</div>
+    <div class="hint">Name and location are fixed. To change them, edit <code>config.js</code>.</div>
   </section>
 
   <div class="row no-print"><a class="btn" href="scan.html">Open in-app scanner</a></div>
@@ -86,7 +88,8 @@
   const canvas = $('qr'), linkEl = $('link'), noteEl = $('note'), titleEl = $('title');
 
   // Start from ?name=..&address=.. in this page's URL if present, otherwise config.js
-  const start = Maps.fromQuery(location.search) || window.RESTAURANT || {};
+  // Name and coordinates always come from config.js (they can't be changed on the page or via the URL)
+  const start = window.RESTAURANT || {};
   fields.forEach(f => { $(f).value = start[f] || ''; });
 
   // A phone can only open the redirect page if this site is reachable from the internet
@@ -141,8 +144,6 @@
     noteEl.hidden = !notes.length;
     noteEl.innerHTML = notes.map(n => `<div>${n}</div>`).join('<br>');
 
-    // Keep the settings in the address bar so this exact QR page can be bookmarked or shared
-    history.replaceState(null, '', '?' + Maps.toQuery(dest));
   }
 
   fields.forEach(f => $(f).addEventListener('input', update));
