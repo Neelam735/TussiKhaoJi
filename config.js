@@ -8,7 +8,8 @@
 // ─────────────────────────────────────────────────────────────
 window.RESTAURANT = {
   name: 'Tussi Khao Ji',
-  address: '',          // e.g. 'Lawrence Road, Amritsar, Punjab'
-  lat: '',              // e.g. '31.6340'
-  lng: '',              // e.g. '74.8723'
+  address: '',          // optional when lat/lng are set
+  lat: '12.982694',     // 12°58'57.7"N
+  lng: '77.639778',     // 77°38'23.2"E
+  // Google Maps link for reference: https://maps.app.goo.gl/yfbAQP2hcHcSEZeC8
 };
