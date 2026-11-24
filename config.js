@@ -7,7 +7,7 @@
 //  If lat/lng are left empty, the name + address are used instead.
 // ─────────────────────────────────────────────────────────────
 window.RESTAURANT = {
-  name: 'Tussi Khao Ji',
+  name: 'Tussi Khao Ji – Punjabi Vegetarian Restaurant',
   address: '',          // optional when lat/lng are set
   lat: '12.982694',     // 12°58'57.7"N
   lng: '77.639778',     // 77°38'23.2"E
